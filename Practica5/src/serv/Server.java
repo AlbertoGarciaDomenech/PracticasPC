@@ -5,26 +5,22 @@ import java.util.*;
 
 public class Server {
 
-	//private tabla usuarios (tripleta idUsuario, canal comunicacion input, canal comunicacion output)
-	private InetAddress dirIP;
-	private int port;
+	//private MONITOR usuarios (tripleta idUsuario, canal comunicacion input, canal comunicacion output)
 	
-	public Server(InetAddress ip, int port) {
-		this.dirIP = ip;
-		this.port = port;
-		
-		
-		//init userTable(id,fin,fout) and info(id,list<>)
-	}
+	static HashMap<String,Object[]> usersInfo;
+	static HashMap<String, Object[]> usersData;
+	static MonitorUsers info;
+	// static MonitorData data;
 	
-	
+	static InetAddress dirIP;
+	static int port;
 	
 	public static void main(String[] args) throws UnknownHostException {
 		
 		if(args.length < 1) return;
-		InetAddress ip = InetAddress.getLocalHost();
-		int port = Integer.parseInt(args[0]);
-		Server server = new Server(ip,port);
+		dirIP = InetAddress.getLocalHost();
+		port = Integer.parseInt(args[0]);
+		//Server server = new Server(ip,port);
 	
 		
 		try(ServerSocket serverSocket = new ServerSocket(port)){
@@ -32,12 +28,14 @@ public class Server {
 			while(true) {
 				Socket socket =  serverSocket.accept();
 				
+
 				(new OyenteCliente(socket)).start();
-				InputStream inputS = socket.getInputStream(); 
-				OutputStream outputS = socket.getOutputStream();
 				
-				PrintWriter wr = new PrintWriter(outputS, true);
-				wr.println("User-Agent: Simple Http Client");
+//				InputStream inputS = socket.getInputStream(); 
+//				OutputStream outputS = socket.getOutputStream();
+				
+//				PrintWriter wr = new PrintWriter(outputS, true);
+//				wr.println("User-Agent: Simple Http Client");
 													
 				
 			}
