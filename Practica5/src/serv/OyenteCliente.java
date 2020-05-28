@@ -5,7 +5,7 @@ import java.net.*;
 import mensajes.*;
 
 
-public class OyenteCliente extends Thread{
+public class OyenteCliente implements Runnable{
 
 	
 	//Monitor que comunica cliente y servidor
@@ -38,20 +38,23 @@ public class OyenteCliente extends Thread{
 			switch(message.getType()) {
 				case 0:
 					//NUEVA CONEXION
-					info.add(message.getUserID(), this.fin, this.fout);
+					info.add(message.getOrigin(), this.fin, this.fout);
 					fout.writeObject(new MensajeConfirmacionConex(5, message.getDestiny(), message.getOrigin()));
 					break;
 					
 				case 1:
 					//PASAR LISTA USUARIOS
+					String response = info.getUsersList();
 					
 					break;
 					
-//				case "CLOSE_CONEXION":
-//					
-//					
-//					break;
-//					
+				case 2:
+					//CERRAR CONEXION
+					info.delete(message.getOrigin());
+					fout.writeObject(new MensajeCerrarConfirm(6, message.getDestiny(), message.getOrigin()));
+					
+					break;
+					
 //				case "ASK_FILE":
 //					
 //					break;
@@ -60,9 +63,6 @@ public class OyenteCliente extends Thread{
 //					
 //					break;
 //			
-				case default:
-					
-					break;
 			}
 					
 		}

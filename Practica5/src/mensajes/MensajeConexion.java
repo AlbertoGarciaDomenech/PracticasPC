@@ -8,15 +8,6 @@ public class MensajeConexion  extends Message{
 		super(0, _origin, _destiny);
 		this.userID = _userID;
 		// TODO Auto-generated constructor stub
-	}
-
-	@Override
-	public String getUserID() {
-		return this.userID;
-	}
-	
-	
-
-	
+	}	
 
 }

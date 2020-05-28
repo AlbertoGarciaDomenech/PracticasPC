@@ -2,7 +2,9 @@ package mensajes;
 
 public abstract class Message {
 
-	private int type; // 0 = CONEXION  1 = LISTA_USUARIOS  2 = CERRAR_CONEXION  3 = PEDIR_FICHERO  4 = PREPARADO 5 = CONFIRMACION
+	private int type;
+	// 0 = CONEXION  1 = LISTA_USUARIOS  2 = CERRAR_CONEXION  3 = PEDIR_FICHERO 
+	// 4 = PREPARADO 5 = CONFIRMACION CONEXION  6 = CONFIRMACION CERRAR CONEX
 	private String origin;
 	private String destiny;
 	
@@ -24,7 +26,5 @@ public abstract class Message {
 	public String getDestiny() {
 		return destiny;
 	}
-	
-	public abstract String getUserID();
 	
 }
