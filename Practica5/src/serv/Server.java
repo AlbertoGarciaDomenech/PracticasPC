@@ -10,7 +10,7 @@ public class Server {
 	static HashMap<String,Object[]> usersInfo;
 	static HashMap<String, Object[]> usersData;
 	static MonitorUsers info;
-	// static MonitorData data;
+	static MonitorData data;
 	
 	static InetAddress dirIP;
 	static int port;
@@ -29,7 +29,7 @@ public class Server {
 				Socket socket =  serverSocket.accept();
 				
 
-				(new OyenteCliente(socket)).start();
+				(new OyenteCliente(socket, info, data)).start();
 				
 //				InputStream inputS = socket.getInputStream(); 
 //				OutputStream outputS = socket.getOutputStream();

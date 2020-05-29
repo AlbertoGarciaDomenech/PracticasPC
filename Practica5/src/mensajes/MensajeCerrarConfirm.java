@@ -2,8 +2,8 @@ package mensajes;
 
 public class MensajeCerrarConfirm extends Message{
 
-	public MensajeCerrarConfirm(int _type, String _origin, String _destiny) {
-		super(6, _origin, _destiny);
+	public MensajeCerrarConfirm(String _origin, String _destiny) {
+		super(6, _origin, _destiny,null);
 		// TODO Auto-generated constructor stub
 	}
 
