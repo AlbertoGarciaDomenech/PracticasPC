@@ -1,5 +1,6 @@
 package clie;
 
+import java.awt.TrayIcon.MessageType;
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -15,10 +16,9 @@ public class Client {
 		int port; //indica el puerto por el que se va a comunicar con el servidor
 		InetAddress localhost, dirIP; //localhost indica la direccion ip del servidor, mientras que dirIP indica la dirIP del cliente
 		char c;
-		Scanner scan = new Scanner(System.in);
 		String hostname, userID;
 		boolean more = true;
-		
+		InputCliente interf = new InputCliente();
 		//INICIALIZACION DE VARIABLES
 		
 		dirIP =  InetAddress.getLocalHost(); 		//para probar inicializamos tanto la dirIp del cliente como la del servidor como la direccion local
@@ -33,17 +33,22 @@ public class Client {
 			port = Integer.parseInt(args[1]);
 						
 		}
-		System.out.println("¿Cual es tu nombre de usuario? :");
-		userID = scan.nextLine();
+		
+		userID = interf.askUserID();
 		while(more) {
-			try(Socket socket = new Socket(localhost,port)) { 
+			try(Socket socket = new Socket(localhost,port)) { 	// crea el socket con el servidor
+				
 				ObjectInputStream inputChannel = new ObjectInputStream(socket.getInputStream());
 				ObjectOutputStream outputChannel = new ObjectOutputStream(socket.getOutputStream());
+				(new OyenteServidor(inputChannel, outputChannel,interf)).start();	// crea un nuevo thread con el OyenteServidor
+				//ENVIAR MENSAJE CONEXION
+				outputChannel.writeObject(new MensajeConexion(userID, hostname));
 				//conexion con el servidor
 				//mandamos un mensaje de nueva conexion  y esperamos a recibir la confirmacion
-				outputChannel.writeObject(new MensajeConexion(userID, hostname));
 				Message m = (Message) inputChannel.readObject();
-				if(m.getType() == 5){ // Comprobamos que el mensaje recibido por parte del servidor es del tipo MensajeConfirmacionConex
+				if(m.getType().equals(messageType.CONFIRMACION_CONEXION)){ 
+					// Comprobamos que el mensaje recibido por parte del servidor es del tipo MensajeConfirmacionConex
+					
 					//preguntar al cliente que quiere hacer
 					
 					System.out.println("Que quieres hacer: \n 1: Conocer el nombre de todos los usuarios en el servidor \n 2: Descargar informacion 0: Salir");

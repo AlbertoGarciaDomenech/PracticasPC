@@ -33,29 +33,25 @@ public class OyenteCliente extends Thread{//implements Runnable{
 			try {
 				message = (Message) fin.readObject();
 			switch(message.getType()) {
-				case 0:
-					//NUEVA CONEXION
+				case CONEXION:
 					info.add(message.getOrigin(), this.fin, this.fout);
 					fout.writeObject(new MensajeConfirmacionConex(message.getDestiny(), message.getOrigin()));
 					break;
 					
-				case 1:
-					//PASAR LISTA USUARIOS
+				case LISTA_USUARIOS:
 					String response = info.getUsersList();
 					fout.writeObject(new MensajeListaUsers(message.getDestiny(), message.getOrigin(), response));
 					break;
 					
-				case 2:
-					//CERRAR CONEXION
+				case CERRAR_CONEXION:
 					info.delete(message.getOrigin());
 					
 					fout.writeObject(new MensajeCerrarConfirm(message.getDestiny(), message.getOrigin()));
 					
 					break;
 					
-				case 3:
-				//PEDIR FICHERO:
-					String owner = data.getOwner(message.getArgument());
+				case PEDIR_FICHERO:
+					String owner = data.getOwner(message.getArgument().toString());
 					fout.writeObject(new MensajeEmitirFich(message.getOrigin(), message.getDestiny()));
 					break;
 //					
@@ -63,6 +59,8 @@ public class OyenteCliente extends Thread{//implements Runnable{
 //					
 //					break;
 //			
+				default:
+					break;
 				}
 			}catch (Exception e) {
 				// TODO Auto-generated catch block
