@@ -27,17 +27,9 @@ public class Server {
 			
 			while(true) {
 				Socket socket =  serverSocket.accept();
-				
-
-				(new OyenteCliente(socket, info, data)).start();
-				
-//				InputStream inputS = socket.getInputStream(); 
-//				OutputStream outputS = socket.getOutputStream();
-				
-//				PrintWriter wr = new PrintWriter(outputS, true);
-//				wr.println("User-Agent: Simple Http Client");
-													
-				
+				ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+				ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+				(new OyenteCliente(socket, in, out, info, data)).start();
 			}
 			
 		} catch (IOException e) {

@@ -1,6 +1,7 @@
 package serv;
 import java.io.*;
 import java.net.*;
+import java.util.Scanner;
 
 import mensajes.*;
 
@@ -17,18 +18,20 @@ public class OyenteCliente extends Thread{//implements Runnable{
 	private MonitorUsers info;
 	private MonitorData data;
 	
-	public OyenteCliente(Socket _s, MonitorUsers monInfo, MonitorData Mondata) throws IOException {
+	public OyenteCliente(Socket _s, ObjectInputStream _in,ObjectOutputStream _out, MonitorUsers monInfo, MonitorData Mondata) throws IOException {
 		this.socket = _s;
-		this.fin = new ObjectInputStream (_s.getInputStream());
 		this.fout = new ObjectOutputStream (_s.getOutputStream());
+		this.fin = new ObjectInputStream (_s.getInputStream());
 		this.info = monInfo;
 		this.data =  Mondata;
+		System.out.println("creado");
 	}
 	
 	public void run() {
 		
 		while(true) {
-			
+			Scanner scan = new Scanner(System.in);
+			scan.next();
 			Message message = null;
 			try {
 				message = (Message) fin.readObject();
@@ -37,19 +40,14 @@ public class OyenteCliente extends Thread{//implements Runnable{
 					info.add(message.getOrigin(), this.fin, this.fout);
 					fout.writeObject(new MensajeConfirmacionConex(message.getDestiny(), message.getOrigin()));
 					break;
-					
 				case LISTA_USUARIOS:
 					String response = info.getUsersList();
-					fout.writeObject(new MensajeListaUsers(message.getDestiny(), message.getOrigin(), response));
+					fout.writeObject(new MensajeConfirmacionLista(message.getDestiny(), message.getOrigin(), response));
 					break;
-					
 				case CERRAR_CONEXION:
 					info.delete(message.getOrigin());
-					
 					fout.writeObject(new MensajeCerrarConfirm(message.getDestiny(), message.getOrigin()));
-					
 					break;
-					
 				case PEDIR_FICHERO:
 					String owner = data.getOwner(message.getArgument().toString());
 					fout.writeObject(new MensajeEmitirFich(message.getOrigin(), message.getDestiny()));

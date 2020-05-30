@@ -12,15 +12,12 @@ public class Client {
 	public static void main(String[] args) throws UnknownHostException {
 		
 		//CREACION DE VARIABLES
-		
-		int port; //indica el puerto por el que se va a comunicar con el servidor
-		InetAddress localhost, dirIP; //localhost indica la direccion ip del servidor, mientras que dirIP indica la dirIP del cliente
-		char c;
+		int port; 							//indica el puerto por el que se va a comunicar con el servidor
+		InetAddress localhost, dirIP; 		//localhost indica la direccion ip del servidor, mientras que dirIP indica la del cliente
 		String hostname, userID;
-		boolean more = true;
 		InputCliente interf = new InputCliente();
-		//INICIALIZACION DE VARIABLES
 		
+		//INICIALIZACION DE VARIABLES
 		dirIP =  InetAddress.getLocalHost(); 		//para probar inicializamos tanto la dirIp del cliente como la del servidor como la direccion local
 		localhost = InetAddress.getLocalHost();
 		if(args.length < 1) return;
@@ -35,42 +32,33 @@ public class Client {
 		}
 		
 		userID = interf.askUserID();
-		while(more) {
-			try(Socket socket = new Socket(localhost,port)) { 	// crea el socket con el servidor
+		try(Socket socket = new Socket(localhost,port)) { 	// crea el socket con el servidor
+			ObjectOutputStream outputChannel = new ObjectOutputStream(socket.getOutputStream());
+			ObjectInputStream inputChannel = new ObjectInputStream(socket.getInputStream());
 				
-				ObjectInputStream inputChannel = new ObjectInputStream(socket.getInputStream());
-				ObjectOutputStream outputChannel = new ObjectOutputStream(socket.getOutputStream());
-				(new OyenteServidor(inputChannel, outputChannel,interf)).start();	// crea un nuevo thread con el OyenteServidor
-				//ENVIAR MENSAJE CONEXION
-				outputChannel.writeObject(new MensajeConexion(userID, hostname));
-				//conexion con el servidor
-				//mandamos un mensaje de nueva conexion  y esperamos a recibir la confirmacion
-				Message m = (Message) inputChannel.readObject();
-				if(m.getType().equals(messageType.CONFIRMACION_CONEXION)){ 
-					// Comprobamos que el mensaje recibido por parte del servidor es del tipo MensajeConfirmacionConex
-					
-					//preguntar al cliente que quiere hacer
-					
-					System.out.println("Que quieres hacer: \n 1: Conocer el nombre de todos los usuarios en el servidor \n 2: Descargar informacion 0: Salir");
-					switch(scan.nextInt()) {
+			(new OyenteServidor(inputChannel, outputChannel,interf)).start();	// crea un nuevo thread con el OyenteServidor
+			outputChannel.writeObject(new MensajeConexion(userID, hostname)); 	// enviar mensaje conexion al servidor(se recibe confirmacion en OyenteServidor)
+				
+			//establecer menu con usuario en interfaz
+			int opcion = interf.menu();
+			
+			while(opcion != 0) {
+				switch (opcion) {					
+					case 1:
+						//CONSULTAR LISTA DE TODOS LOS USUARIOS	
+						outputChannel.writeObject((new MensajeListaUsers(userID, hostname, null)));
+						break;
+					case 2:
+						//PEDIR FICHERO
 						
-						case 1: 
-							//mandar mensaje al servidor pidiendo lista
-							
-					
-					}
+						break;
 				}
-				
+				opcion = interf.menu();
 			}
-			catch(Exception e) {
-				
-			}
-			finally {
-				System.out.println("more?(y/n): ");
-				c = scan.next().toCharArray()[0];
-				more = (c == 'y') ? true : false;
-			}
-
+				outputChannel.writeObject(new MensajeCerrarConex(userID, hostname));			
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
+
 	}
 }

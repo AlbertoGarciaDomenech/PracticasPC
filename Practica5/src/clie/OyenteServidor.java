@@ -28,21 +28,21 @@ public class OyenteServidor extends Thread {
 				switch(t) {
 				
 				case CONFIRMACION_CONEXION:
-					
-					System.out.println(("Conexion establecida"));
+					interf.confConex();
 					break;
 				case CONFIRMACION_LISTA:
-				
-					System.out.println(m.getArgument().toString()); //Mostrar por pantalla la lista recibida
+					interf.confLista(m.getArgument().toString());
 					break;
 				case EMITIR_FICHERO:
-					
+					String clienteC1 = m.getArgument().toString();
+					outputChannel.writeObject(new MensajePreparadoClienteServidor(m.getDestiny(), clienteC1, null));
+					//NO MANDA NULL, MANDA LA INFORMACION PEDIDA EN m.getArgument()
 					break;
 				case PREPARADO_CLIENTE_SERVIDOR:
 					
 					break;
 				case CONFIRMACION_CERRAR: 
-					System.out.println("Adios!");
+					interf.cerrConex();
 					break;
 				default:
 					break;
