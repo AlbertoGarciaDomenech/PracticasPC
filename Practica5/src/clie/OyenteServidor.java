@@ -20,8 +20,10 @@ public class OyenteServidor extends Thread {
 		
 		while(true) {
 			
+			Message m = null;
+			
 			try {
-				Message m = (Message)inputChannel.readObject();
+				m = (Message)inputChannel.readObject();
 				
 				messageType t = m.getType();
 				

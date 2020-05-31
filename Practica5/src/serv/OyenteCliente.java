@@ -20,20 +20,21 @@ public class OyenteCliente extends Thread{//implements Runnable{
 	
 	public OyenteCliente(Socket _s, ObjectInputStream _in,ObjectOutputStream _out, MonitorUsers monInfo, MonitorData Mondata) throws IOException {
 		this.socket = _s;
-		this.fout = new ObjectOutputStream (_s.getOutputStream());
-		this.fin = new ObjectInputStream (_s.getInputStream());
+		this.fout = _out; //new ObjectOutputStream (_s.getOutputStream());
+		this.fin = _in; //new ObjectInputStream (_s.getInputStream());
 		this.info = monInfo;
 		this.data =  Mondata;
-		System.out.println("creado");
 	}
 	
 	public void run() {
 		
 		while(true) {
-			Scanner scan = new Scanner(System.in);
-			scan.next();
+//			Scanner scan = new Scanner(System.in);
+//			scan.next();
 			Message message = null;
 			try {
+//				String str = (String) fin.readObject();
+	//			System.out.println(str);
 				message = (Message) fin.readObject();
 			switch(message.getType()) {
 				case CONEXION:

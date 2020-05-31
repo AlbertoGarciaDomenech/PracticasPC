@@ -1,11 +1,9 @@
 package mensajes;
 
-public abstract class Message {
+import java.io.Serializable;
 
-	
-	// 0 = CONEXION  1 = LISTA_USUARIOS  2 = CERRAR_CONEXION  3 = PEDIR_FICHERO 
-	// 4 = PREPARADO 5 = CONFIRMACION CONEXION  6 = CONFIRMACION CERRAR CONEX
-	// 7 = EMITIR FICHERO  
+public abstract class Message implements Serializable{
+
 	private messageType type;
 	private String origin;
 	private String destiny;

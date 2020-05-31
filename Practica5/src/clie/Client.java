@@ -1,9 +1,7 @@
 package clie;
 
-import java.awt.TrayIcon.MessageType;
 import java.io.*;
 import java.net.*;
-import java.util.*;
 
 import mensajes.*;
 
@@ -38,6 +36,8 @@ public class Client {
 				
 			(new OyenteServidor(inputChannel, outputChannel,interf)).start();	// crea un nuevo thread con el OyenteServidor
 			outputChannel.writeObject(new MensajeConexion(userID, hostname)); 	// enviar mensaje conexion al servidor(se recibe confirmacion en OyenteServidor)
+//			outputChannel.writeChars("prueba");
+
 				
 			//establecer menu con usuario en interfaz
 			int opcion = interf.menu();
