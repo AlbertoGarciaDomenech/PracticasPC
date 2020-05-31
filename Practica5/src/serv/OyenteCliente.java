@@ -1,7 +1,6 @@
 package serv;
 import java.io.*;
 import java.net.*;
-import java.util.Scanner;
 
 import mensajes.*;
 
@@ -33,8 +32,6 @@ public class OyenteCliente extends Thread{//implements Runnable{
 //			scan.next();
 			Message message = null;
 			try {
-//				String str = (String) fin.readObject();
-	//			System.out.println(str);
 				message = (Message) fin.readObject();
 			switch(message.getType()) {
 				case CONEXION:

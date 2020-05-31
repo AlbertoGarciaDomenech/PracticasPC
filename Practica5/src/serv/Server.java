@@ -22,6 +22,10 @@ public class Server {
 		port = Integer.parseInt(args[0]);
 		//Server server = new Server(ip,port);
 	
+		info = new MonitorUsers();
+		
+		data = new MonitorData();
+		
 		
 		try(ServerSocket serverSocket = new ServerSocket(port)){
 			

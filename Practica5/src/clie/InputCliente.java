@@ -2,7 +2,6 @@ package clie;
 
 import java.util.*;
 
-import mensajes.messageType;
 
 public class InputCliente {
 

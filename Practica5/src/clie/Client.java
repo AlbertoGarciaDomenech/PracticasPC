@@ -31,12 +31,11 @@ public class Client {
 		
 		userID = interf.askUserID();
 		try(Socket socket = new Socket(localhost,port)) { 	// crea el socket con el servidor
-			ObjectOutputStream outputChannel = new ObjectOutputStream(socket.getOutputStream());
 			ObjectInputStream inputChannel = new ObjectInputStream(socket.getInputStream());
-				
+			ObjectOutputStream outputChannel = new ObjectOutputStream(socket.getOutputStream());
 			(new OyenteServidor(inputChannel, outputChannel,interf)).start();	// crea un nuevo thread con el OyenteServidor
+			
 			outputChannel.writeObject(new MensajeConexion(userID, hostname)); 	// enviar mensaje conexion al servidor(se recibe confirmacion en OyenteServidor)
-//			outputChannel.writeChars("prueba");
 
 				
 			//establecer menu con usuario en interfaz
