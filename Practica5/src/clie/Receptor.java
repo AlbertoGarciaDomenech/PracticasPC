@@ -3,7 +3,7 @@ package clie;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-public class Receptor {
+public class Receptor extends Thread{
 
 	private ObjectInputStream inputChannel;
 	private ObjectOutputStream outputChannel;

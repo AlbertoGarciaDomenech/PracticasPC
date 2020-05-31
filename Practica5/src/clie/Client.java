@@ -33,7 +33,7 @@ public class Client {
 		try(Socket socket = new Socket(localhost,port)) { 	// crea el socket con el servidor
 			ObjectInputStream inputChannel = new ObjectInputStream(socket.getInputStream());
 			ObjectOutputStream outputChannel = new ObjectOutputStream(socket.getOutputStream());
-			(new OyenteServidor(inputChannel, outputChannel,interf)).start();	// crea un nuevo thread con el OyenteServidor
+			(new OyenteServidor(inputChannel, outputChannel,interf,port)).start();	// crea un nuevo thread con el OyenteServidor
 			
 			outputChannel.writeObject(new MensajeConexion(userID, hostname)); 	// enviar mensaje conexion al servidor(se recibe confirmacion en OyenteServidor)
 
@@ -49,7 +49,8 @@ public class Client {
 						break;
 					case 2:
 						//PEDIR FICHERO
-						
+						String fileName = interf.askFile();
+						outputChannel.writeObject((new MensajePedirFIch(userID, hostname, fileName)));
 						break;
 				}
 				opcion = interf.menu();

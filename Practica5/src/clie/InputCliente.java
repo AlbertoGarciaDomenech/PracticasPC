@@ -48,5 +48,14 @@ public class InputCliente {
 		}
 		return opcion;		
 	}
+
+	public String askFile() {
+		
+		System.out.println("¿Que fichero quieres? :");
+		
+		userID = scan.nextLine();
+	
+		return userID;
+	}
 	
 }

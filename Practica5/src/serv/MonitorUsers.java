@@ -22,6 +22,14 @@ public class MonitorUsers {
 			
 	}
 	
+	synchronized ObjectOutputStream getFout(String _userID) {
+		if(data.containsKey(_userID)) {	
+			ObjectOutputStream fout = (ObjectOutputStream) data.get(_userID)[1];
+			return fout;
+		}
+		return null;
+	}
+	
 	synchronized String getUsersList() {
 		Enumeration<String> enu = this.data.keys();
 		

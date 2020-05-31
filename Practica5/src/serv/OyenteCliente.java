@@ -48,18 +48,18 @@ public class OyenteCliente extends Thread{//implements Runnable{
 					break;
 				case PEDIR_FICHERO:
 					String owner = data.getOwner(message.getArgument().toString());
-					fout.writeObject(new MensajeEmitirFich(message.getOrigin(), message.getDestiny()));
+					//obtener fout2 de owners
+					ObjectOutputStream fout2 = info.getFout(owner);
+					fout2.writeObject(new MensajeEmitirFich(message.getOrigin(), message.getDestiny()));
+					break;				
+				case PREPARADO_CLIENTE_SERVIDOR:
+					
 					break;
-//					
-//				case "READY":
-//					
-//					break;
-//			
+			
 				default:
 					break;
 				}
 			}catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 					

@@ -9,11 +9,13 @@ public class OyenteServidor extends Thread {
 	private ObjectInputStream inputChannel;
 	private ObjectOutputStream outputChannel;
 	private InputCliente interf;
+	private int port;
 	
-	public OyenteServidor(ObjectInputStream _in, ObjectOutputStream _out, InputCliente _interf) {
+	public OyenteServidor(ObjectInputStream _in, ObjectOutputStream _out, InputCliente _interf,int _port) {
 		this.inputChannel = _in;
 		this.outputChannel = _out;
 		this.interf = _interf;
+		this.port = _port;
 	}
 	
 	public void run() {
@@ -36,9 +38,12 @@ public class OyenteServidor extends Thread {
 					interf.confLista(m.getArgument().toString());
 					break;
 				case EMITIR_FICHERO:
+					Object infoEmitir = m.getArgument();
 					String clienteC1 = m.getArgument().toString();
-					outputChannel.writeObject(new MensajePreparadoClienteServidor(m.getDestiny(), clienteC1, null));
+					outputChannel.writeObject(new MensajePreparadoClienteServidor(m.getDestiny(), clienteC1, infoEmitir));
 					//NO MANDA NULL, MANDA LA INFORMACION PEDIDA EN m.getArgument()
+					//Crear Emisor y esperar en accept el socket
+					(new Emisor(this.inputChannel,this.outputChannel,infoEmitir,port)).start();
 					break;
 				case PREPARADO_CLIENTE_SERVIDOR:
 					
