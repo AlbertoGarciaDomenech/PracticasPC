@@ -34,9 +34,14 @@ public class MonitorUsers {
 		Enumeration<String> enu = this.data.keys();
 		
 		StringBuilder str = new StringBuilder();
+		str.append("Lista de usuarios: ");
 		while (enu.hasMoreElements()){
 			str.append(enu.nextElement());
+			str.append(", ");
+			
 		}
+		str.delete(str.length()-2, str.length());
+		str.append('.');
 		return str.toString();
 	}
 	
