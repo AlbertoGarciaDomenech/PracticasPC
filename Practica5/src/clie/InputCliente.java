@@ -25,7 +25,7 @@ public class InputCliente {
 	}
 	
 	public void confConex() {
-		System.out.println(("Conexion establecida"));
+		System.out.println(("*Conexion establecida*"));
 	}
 	
 	public void confLista(String l) {
@@ -38,11 +38,11 @@ public class InputCliente {
 	
 	public int menu() {
 		int opcion;
-		System.out.println("Que quieres hacer: \n 1: Conocer el nombre de todos los usuarios en el servidor \n 2: Descargar informacion 0: Salir");
+		System.out.println("Que quieres hacer: \n 1: Conocer el nombre de todos los usuarios en el servidor \n 2: Descargar informacion \n 0: Salir");
 		opcion = scan.nextInt();
 		while(opcion < 0 || opcion > 2) { //Asegurar que la opcion escrita por el cliente sea posible
 			System.out.println("Opcion no valida, por favor elija una de las tres opciones.\n");
-			System.out.println("Que quieres hacer: \n 1: Conocer el nombre de todos los usuarios en el servidor \n 2: Descargar informacion 0: Salir");
+			System.out.println("Que quieres hacer: \n 1: Conocer el nombre de todos los usuarios en el servidor \n 2: Descargar informacion \n 0: Salir");
 			opcion = scan.nextInt();
 				
 		}

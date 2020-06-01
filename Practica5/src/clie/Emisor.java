@@ -24,16 +24,11 @@ public class Emisor extends Thread{
 	
 	public void run() {
 	try(ServerSocket serverSocket = new ServerSocket(port)){
-				
-				while(true) {
-					Socket socket =  serverSocket.accept();
-					ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-					out.writeObject(this.infoEmitir);
-				}
-				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		Socket socket =  serverSocket.accept();
+		ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+		out.writeObject(this.infoEmitir);
+		} catch (IOException e) {
+			e.printStackTrace();
 			}
 		}
 }
