@@ -67,7 +67,7 @@ public class OyenteServidor extends Thread {
 				
 				case CONFIRMACION_CERRAR: 
 					interf.cerrConex();
-					socket.close();
+					//socket.close();
 					break;
 				
 				default:

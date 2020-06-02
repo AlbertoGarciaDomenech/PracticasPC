@@ -1,9 +1,10 @@
 package serv;
 
+import java.io.Serializable;
 import java.net.InetAddress;
 import java.util.*;
 
-public class Usuario {
+public class Usuario implements Serializable {
 
 	private String userID;												//nombre
 	private InetAddress dirIp;											//direccion Ip

@@ -12,16 +12,18 @@ public class Client {
 	public static void main(String[] args) throws UnknownHostException {
 		
 		//CREACION DE VARIABLES
-		int port; 							//indica el puerto por el que se va a comunicar con el servidor
-		InetAddress localhost, dirIP; 		//localhost indica la direccion ip del servidor, mientras que dirIP indica la del cliente
+		int port; 													//indica el puerto por el que se va a comunicar con el servidor
+		InetAddress localhost, dirIP; 								//localhost indica la direccion ip del servidor, mientras que dirIP indica la del cliente
 		String hostname, userID;
 		InputCliente interf = new InputCliente();
-		Usuario _user;						//usuario con id,dirIp,lista de informacion compartida
+		Usuario _user;												//usuario con id,dirIp,lista de informacion compartida
 		ArrayList<String> infoCompartida = new ArrayList<>();		//lista de informacion compartida inicialiada vacia
 		
 		//INICIALIZACION DE VARIABLES
-		dirIP =  InetAddress.getLocalHost(); 		//para probar inicializamos tanto la dirIp del cliente como la del servidor como la direccion local
+		dirIP =  InetAddress.getLocalHost(); 						//para probar inicializamos tanto la dirIp del cliente como la del servidor como la direccion local
 		localhost = InetAddress.getLocalHost();
+		
+		
 		if(args.length < 1) return;
 		if(args.length == 1) {
 			port = Integer.parseInt(args[0]);
@@ -36,6 +38,8 @@ public class Client {
 		userID = interf.askUserID();
 		infoCompartida = interf.askInfo();
 		_user = new Usuario(userID, dirIP, infoCompartida);
+		
+		
 		try(Socket socket = new Socket(localhost,port)) { 	// crea el socket con el servidor
 			ObjectInputStream inputChannel = new ObjectInputStream(socket.getInputStream());
 			ObjectOutputStream outputChannel = new ObjectOutputStream(socket.getOutputStream());

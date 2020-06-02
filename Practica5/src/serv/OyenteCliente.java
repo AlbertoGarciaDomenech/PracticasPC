@@ -19,8 +19,8 @@ public class OyenteCliente extends Thread{
 	
 	public OyenteCliente(Socket _s, ObjectInputStream _in,ObjectOutputStream _out, MonitorSockets _sockets, MonitorData Mondata) throws IOException {
 		this.socket = _s;
-		this.fout = _out; //new ObjectOutputStream (_s.getOutputStream());
-		this.fin = _in; //new ObjectInputStream (_s.getInputStream());
+		this.fout = _out;
+		this.fin = _in; 
 		this.sockets = _sockets;
 		this.data =  Mondata;
 	}
@@ -46,7 +46,7 @@ public class OyenteCliente extends Thread{
 				case CERRAR_CONEXION:
 					sockets.delete(message.getOrigin());
 					fout.writeObject(new MensajeCerrarConfirm(message.getDestiny(), message.getOrigin()));
-					socket.close();
+					//socket.close();
 					break;
 				case PEDIR_FICHERO:
 					MensajePedirFIch mPedir = (MensajePedirFIch) message;

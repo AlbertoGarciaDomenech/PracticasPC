@@ -6,7 +6,7 @@ import java.util.*;
 public class InputCliente {
 
 	
-	private String userID;
+	private String str;
 	private Scanner scan;
 	
 	public InputCliente() {
@@ -19,9 +19,9 @@ public class InputCliente {
 		
 		System.out.println("¿Cual es tu nombre de usuario? :");
 		
-		userID = scan.nextLine();
+		str = scan.nextLine();
 	
-		return userID;
+		return str;
 	}
 	
 	public void confConex() {
@@ -29,7 +29,7 @@ public class InputCliente {
 	}
 	
 	public void confLista(String l) {
-		System.out.println(l); //Mostrar por pantalla la lista recibida
+		System.out.println(l); 
 	}
 	
 	public void cerrConex() {
@@ -53,23 +53,23 @@ public class InputCliente {
 		
 		System.out.println("¿Que fichero quieres? :");
 		
-		userID = scan.nextLine();
+		str = scan.nextLine();
 	
-		return userID;
+		return str;
 	}
 
 	public ArrayList<String> askInfo() {
-		ArrayList<String> str = new ArrayList<>();
+		ArrayList<String> strList = new ArrayList<>();
 		String more;
 		System.out.println("¿Posees algun archivo?(y/n) ");
 		more = scan.next();
 		while((more.equals("y"))) {
 			System.out.println("\n¿Que archivos posees?(introduce uno a uno): ");
-			str.add(scan.next());
+			strList.add(scan.next());
 			System.out.println("\n¿Posees algun archivo mas?(y/n) ");
 			more = scan.next();
 		}		
-		return str;
+		return strList;
 	}
 	
 }
