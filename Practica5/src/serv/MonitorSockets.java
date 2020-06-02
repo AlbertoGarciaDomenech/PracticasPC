@@ -5,11 +5,11 @@ import java.util.*;
 
 
 
-public class MonitorUsers {
+public class MonitorSockets {
 
 	private volatile Hashtable<String,Object[]> data;
 	
-	public MonitorUsers() {
+	public MonitorSockets() {
 		this.data = new Hashtable<String,Object[]>();
 		
 	}
@@ -24,6 +24,7 @@ public class MonitorUsers {
 	
 	synchronized ObjectOutputStream getFout(String _userID) {
 		if(data.containsKey(_userID)) {	
+			//el valor del diccionario es un array de objetos donde la pos 0 es el inputStream y la pos 1 el outputStream
 			ObjectOutputStream fout = (ObjectOutputStream) data.get(_userID)[1];
 			return fout;
 		}

@@ -10,26 +10,23 @@ import serv.OyenteCliente;
 
 public class Emisor extends Thread{
 
-	private ObjectInputStream inputChannel;
-	private ObjectOutputStream outputChannel;
-	private Object infoEmitir;
-	private int port;
 	
-	public Emisor(ObjectInputStream _in, ObjectOutputStream _out, Object _info, int _port) {
-		this.inputChannel = _in;
-		this.outputChannel = _out;
-		this.infoEmitir = _info;
-		this.port = _port;
+	private ServerSocket serverSocket;
+	private Object infoEmitir;
+	
+	public Emisor(String _infoEmitir) throws IOException {
+		this.serverSocket = new ServerSocket(0);		//ponemos el puerto 0 para que se nos asigne automaticamente uno libre
+		this.infoEmitir = _infoEmitir;
+	}
+	
+	public int getPort() {
+		return serverSocket.getLocalPort();
 	}
 	
 	public void run() {
-	try(ServerSocket serverSocket = new ServerSocket(port)){
 		Socket socket =  serverSocket.accept();
 		ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 		out.writeObject(this.infoEmitir);
-		} catch (IOException e) {
-			e.printStackTrace();
-			}
-		}
+	}
 }
 

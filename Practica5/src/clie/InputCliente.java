@@ -57,5 +57,19 @@ public class InputCliente {
 	
 		return userID;
 	}
+
+	public ArrayList<String> askInfo() {
+		ArrayList<String> str = new ArrayList<>();
+		String more;
+		System.out.println("¿Posees algun archivo?(y/n) ");
+		more = scan.next();
+		while((more.equals("y"))) {
+			System.out.println("\n¿Que archivos posees?(introduce uno a uno): ");
+			str.add(scan.next());
+			System.out.println("\n¿Posees algun archivo mas?(y/n) ");
+			more = scan.next();
+		}		
+		return str;
+	}
 	
 }

@@ -9,7 +9,7 @@ public class Server {
 	
 	static HashMap<String,Object[]> usersInfo;
 	static HashMap<String, Object[]> usersData;
-	static MonitorUsers info;
+	static MonitorSockets sockets;
 	static MonitorData data;
 	
 	static InetAddress dirIP;
@@ -22,7 +22,7 @@ public class Server {
 		port = Integer.parseInt(args[0]);
 		//Server server = new Server(ip,port);
 	
-		info = new MonitorUsers();
+		sockets = new MonitorSockets();
 		
 		data = new MonitorData();
 		
@@ -33,7 +33,7 @@ public class Server {
 				Socket socket =  serverSocket.accept();
 				ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 				ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-				(new OyenteCliente(socket, in, out, info, data)).start();
+				(new OyenteCliente(socket, in, out, sockets, data)).start();
 			}
 			
 		} catch (IOException e) {

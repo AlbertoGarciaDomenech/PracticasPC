@@ -4,18 +4,18 @@ import java.util.*;
 
 public class MonitorData {
 
-	private volatile HashMap<String, String[]> data;
+	private volatile HashMap<String, Usuario> data;
 	
 	public MonitorData() {
 		
-		this.data = new HashMap<String, String[]>();
+		this.data = new HashMap<String, Usuario>();
 	}
 	
 	
-	synchronized public void add(String _userID, String[] _files) {
+	synchronized public void add(String _userID, Usuario user) {
 		
 		if(!data.containsKey(_userID)) { //checks if user already in database
-			data.put(_userID, _files);
+			data.put(_userID, user);
 		}
 	}
 	
@@ -23,18 +23,19 @@ public class MonitorData {
 		if(data.containsKey(_userID))
 			data.remove(_userID);
 	}
-	
-	synchronized String getOwner(String file) {
-		StringBuilder owners = new StringBuilder(); //String con todos los userIDs que poseen file
-		
-		for(String k : data.keySet()) {  //recorremos todas las claves del diccionario
-			boolean owner = false;
-				for(String s : data.get(k)) //recorremos el array de string de cada clave
-					if(s.equals(file))owner = true;
-			if(owner)owners.append(k);
-		}
 
-		return owners.toString();
+	synchronized String getOwner(String file) {
+		
+		for(String key : data.keySet()) {  			//recorremos todas las claves del diccionario
+			if(data.get(key).hasFile(file)) {		//comprobamos si la clase usuario tiene file
+				return key;	
+			}
+		}
+		return null;
+	}
+	
+	synchronized Usuario getUser(String id) {
+		return data.get(id);
 	}
 	
 	

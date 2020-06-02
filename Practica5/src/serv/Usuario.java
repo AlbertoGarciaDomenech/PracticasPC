@@ -5,11 +5,11 @@ import java.util.*;
 
 public class Usuario {
 
-	private String userID;
-	private InetAddress dirIp;
-	private Object[] info;
+	private String userID;												//nombre
+	private InetAddress dirIp;											//direccion Ip
+	private ArrayList<String> info =  new ArrayList<String>();			//lista de informacion compartida
 	
-	public Usuario(String _userID, InetAddress _dirIP, Object[]  _info) {
+	public Usuario(String _userID, InetAddress _dirIP, ArrayList<String>  _info) {
 		this.userID = _userID;
 		this.dirIp = _dirIP;
 		this.info = _info;
@@ -23,13 +23,15 @@ public class Usuario {
 		return this.dirIp;
 	}
 	
-	public Object[] getList() {
-		return this.info;
+	public String[] getList() {
+		return (String[]) this.info.toArray();
 	}
 	
-	public void addtoList(Object o) {
-		ArrayList<Object> temp = new ArrayList<Object>(Arrays.asList(this.info));
-		temp.add(o);
-		info = temp.toArray();
+	public void addtoList(String newFile) {
+		
+	}
+	
+	public boolean hasFile(String filename) {
+		return info.contains(filename);
 	}
 }

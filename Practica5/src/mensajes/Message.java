@@ -7,13 +7,11 @@ public abstract class Message implements Serializable{
 	private messageType type;
 	private String origin;
 	private String destiny;
-	private Object argument;
 	
-	public Message(messageType _type, String _origin, String _destiny, Object _arg) {
+	public Message(messageType _type, String _origin, String _destiny) { 
 		this.type = _type;
 		this.origin = _origin;
 		this.destiny = _destiny;
-		this.argument = _arg;
 	}
 	
 	public messageType getType() {
@@ -28,8 +26,5 @@ public abstract class Message implements Serializable{
 		return destiny;
 	}
 	
-	public Object getArgument() {
-		return this.argument;
-	}
 	
 }
