@@ -37,6 +37,25 @@ public class MonitorData {
 	synchronized Usuario getUser(String id) {
 		return data.get(id);
 	}
+
+
+	synchronized String getUsersList() {
+		//Enumeration<String> enu = this.data.keys();
+		
+		StringBuilder str = new StringBuilder();
+		str.append("Lista de usuarios: ");
+		for(String key : data.keySet()) {
+//		while (enu.hasMoreElements()){
+//			str.append(enu.nextElement());
+			str.append(key);
+			str.append(": ");
+			str.append(data.get(key).getList());
+			str.append("||");
+		}
+		str.delete(str.length()-2, str.length());
+		str.append('.');
+		return str.toString();
+	}
 	
 	
 }

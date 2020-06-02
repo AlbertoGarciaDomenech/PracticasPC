@@ -40,13 +40,13 @@ public class OyenteCliente extends Thread{
 					fout.writeObject(new MensajeConfirmacionConex(message.getDestiny(), message.getOrigin()));
 					break;
 				case LISTA_USUARIOS:
-					String response = sockets.getUsersList();
+					String response = data.getUsersList();
 					fout.writeObject(new MensajeConfirmacionLista(message.getDestiny(), message.getOrigin(), response));
 					break;
 				case CERRAR_CONEXION:
 					sockets.delete(message.getOrigin());
 					fout.writeObject(new MensajeCerrarConfirm(message.getDestiny(), message.getOrigin()));
-					//socket.close();
+//					socket.close();
 					break;
 				case PEDIR_FICHERO:
 					MensajePedirFIch mPedir = (MensajePedirFIch) message;

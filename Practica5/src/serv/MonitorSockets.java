@@ -31,20 +31,6 @@ public class MonitorSockets {
 		return null;
 	}
 	
-	synchronized String getUsersList() {
-		Enumeration<String> enu = this.data.keys();
-		
-		StringBuilder str = new StringBuilder();
-		str.append("Lista de usuarios: ");
-		while (enu.hasMoreElements()){
-			str.append(enu.nextElement());
-			str.append(", ");
-			
-		}
-		str.delete(str.length()-2, str.length());
-		str.append('.');
-		return str.toString();
-	}
 	
 	synchronized void delete(String userID) {
 		if(data.contains(userID)) {
