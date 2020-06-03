@@ -85,7 +85,12 @@ public class Client {
 						//Añadir fichero a lista compartir
 						System.out.println("Que fichero quieres compartir?: ");
 						String fileShare = scan.next();
-						outputChannel.writeObject(new MensajeAdd(userID, hostname, fileShare));
+						File tmpDir = new File(fileShare);
+						boolean exists = tmpDir.exists();
+						if(exists)
+							outputChannel.writeObject(new MensajeAdd(userID, hostname, fileShare));
+						else
+							System.out.println("No tienes este fichero!");
 				}
 				opcion = client.menu(scan);
 			}

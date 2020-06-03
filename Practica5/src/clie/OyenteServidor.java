@@ -66,7 +66,9 @@ public class OyenteServidor extends Thread {
 					System.err.println("Adios!");
 //					socket.close();
 					break;
-				
+					
+				case CONFIRMACION_ADD:
+					System.err.println("*Archivo incorporado*");
 				default:
 					break;
 				}
