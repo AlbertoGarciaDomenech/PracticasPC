@@ -44,7 +44,7 @@ public class Client {
 			port = Integer.parseInt(args[0]);
 			hostname = localhost.toString();
 		}
-		else {
+		else { //si tenemos dos argumentos el primero indica la dirIp del server y el segundo el puerto usado
 			hostname = args[0];
 			port = Integer.parseInt(args[1]);
 						
@@ -86,7 +86,7 @@ public class Client {
 						System.out.println("Que fichero quieres compartir?: ");
 						String fileShare = scan.next();
 						File tmpDir = new File(fileShare);
-						boolean exists = tmpDir.exists();
+						boolean exists = tmpDir.exists();	//comprobamos si puede añadir el ficher introducido(si lo tiene)
 						if(exists)
 							outputChannel.writeObject(new MensajeAdd(userID, hostname, fileShare));
 						else
@@ -126,7 +126,8 @@ public class Client {
 	}
 
 	
-	public static void askInfo(Scanner scan, ArrayList<String> strList) {
+	//pregunta al usuario que informacion quiere compartir al principio de la ejecucion (y comprueba si puede compartirla)
+	public static void askInfo(Scanner scan, ArrayList<String> strList) { 
 		String more;
 		System.out.println("¿Posees algun archivo?(y/n) ");
 		more = scan.next();

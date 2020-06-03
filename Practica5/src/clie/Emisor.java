@@ -3,12 +3,8 @@ package clie;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-
-import serv.OyenteCliente;
 
 public class Emisor extends Thread{
 
@@ -31,7 +27,7 @@ public class Emisor extends Thread{
 	public void run() {
 		Socket socket;
 		try {
-			socket = serverSocket.accept();
+			socket = serverSocket.accept();		//esperamos en accept a que se conecte el receptor
 			inFile.transferTo(socket.getOutputStream());
 
 			socket.close();

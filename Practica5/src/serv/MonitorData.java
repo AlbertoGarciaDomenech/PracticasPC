@@ -12,11 +12,8 @@ public class MonitorData {
 	}
 	
 	
-	synchronized void addUser(String _userID, Usuario user) {
-		
-		if(!data.containsKey(_userID)) { //checks if user already in database
+	synchronized void addUser(String _userID, Usuario user) {		
 			data.put(_userID, user);
-		}
 	}
 	
 	synchronized  void delete(String _userID) {
@@ -53,7 +50,6 @@ public class MonitorData {
 			str.append(data.get(key).getList());
 			str.append("]\n");
 		}
-		str.append('.');
 		return str.toString();
 	}
 	

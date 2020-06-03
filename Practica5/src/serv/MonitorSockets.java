@@ -15,11 +15,8 @@ public class MonitorSockets {
 	}
 	
 	synchronized void add(String userID, ObjectInputStream in, ObjectOutputStream out) {
-		if(!data.containsKey(userID)) {		//check if user already in database
 			Object[] p = {in,out};
-			this.data.put(userID,p); 
-		}
-			
+			this.data.put(userID,p); 			
 	}
 	
 	synchronized ObjectOutputStream getFout(String _userID) {
@@ -33,9 +30,7 @@ public class MonitorSockets {
 	
 	
 	synchronized void delete(String userID) {
-		if(data.contains(userID)) {
-			this.data.remove(userID);
-		}
+		this.data.remove(userID);
 	}
 	
 }

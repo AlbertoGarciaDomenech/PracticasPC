@@ -5,11 +5,7 @@ import java.net.*;
 import mensajes.*;
 
 
-public class OyenteCliente extends Thread{
-
-	
-	//Monitor que comunica cliente y servidor
-	
+public class OyenteCliente extends Thread{	
 	
 	private Socket socket;
 	private volatile ObjectInputStream fin;
@@ -54,7 +50,7 @@ public class OyenteCliente extends Thread{
 					MensajePedirFIch mPedir = (MensajePedirFIch) message;
 					String fileName = mPedir.getFilename();
 					String owner = data.getOwner(fileName);
-					//obtener fout2 de owners
+					//obtener fout2 de owner
 					ObjectOutputStream fout2 = sockets.getFout(owner);
 					//obtenemos usuario propietario
 					Usuario _user = data.getUser(message.getOrigin());

@@ -1,14 +1,13 @@
 package serv;
 import java.io.*;
 import java.net.*;
-import java.util.*;
 
 public class Server {
 
 	private InetAddress dirIP;
 	private int port;
-	private MonitorSockets sockets;
-	private MonitorData data;
+	private MonitorSockets sockets;			//monitor que guarda nombre de usuario y los InputsStream y OutputStream de un cliente
+	private MonitorData data;				//monitor que guarda nombre de usuario y una instancia de Usuario(nombre,dir ip y lista de informacion compartida)
 	
 	public Server(InetAddress _ip, int _p) {
 		this.dirIP = _ip;
