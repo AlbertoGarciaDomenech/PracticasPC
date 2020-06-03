@@ -25,15 +25,15 @@ public class InputCliente {
 	}
 	
 	public void confConex() {
-		System.out.println(("*Conexion establecida*"));
+		System.err.println(("*Conexion establecida*"));
 	}
 	
 	public void confLista(String l) {
-		System.out.println(l); 
+		System.err.println(l); 
 	}
 	
 	public void cerrConex() {
-		System.out.println("Adios!");
+		System.err.println("Adios!");
 	}
 	
 	public int menu() {

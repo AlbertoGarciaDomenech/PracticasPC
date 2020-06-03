@@ -30,7 +30,6 @@ public class Usuario implements Serializable {
 			sb.append(str);
 			sb.append("|");
 		}
-		sb.delete(sb.length()-1, sb.length());
 		return sb.toString();
 	}
 	

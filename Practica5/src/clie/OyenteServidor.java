@@ -11,14 +11,12 @@ public class OyenteServidor extends Thread {
 	private Socket socket;
 	private ObjectInputStream inputChannel;
 	private ObjectOutputStream outputChannel;
-	private InputCliente interf;
 	private int port;
 	
-	public OyenteServidor(Socket _s,ObjectInputStream _in, ObjectOutputStream _out, InputCliente _interf,int _port) {
+	public OyenteServidor(Socket _s,ObjectInputStream _in, ObjectOutputStream _out,int _port) {
 		this.socket = _s;
 		this.inputChannel = _in;
 		this.outputChannel = _out;
-		this.interf = _interf;
 		this.port = _port;
 	}
 	
@@ -36,12 +34,12 @@ public class OyenteServidor extends Thread {
 				switch(t) {
 				
 				case CONFIRMACION_CONEXION:
-					interf.confConex();
+					System.err.println(("*Conexion establecida*"));
 					break;
 					
 				case CONFIRMACION_LISTA:
 					MensajeConfirmacionLista mLis = (MensajeConfirmacionLista) m;
-					interf.confLista(mLis.getLista());
+					System.err.println(mLis.getLista()); 
 					break;
 				
 				case EMITIR_FICHERO:
@@ -66,7 +64,7 @@ public class OyenteServidor extends Thread {
 					break;
 				
 				case CONFIRMACION_CERRAR: 
-					interf.cerrConex();
+					System.err.println("Adios!");
 //					socket.close();
 					break;
 				
