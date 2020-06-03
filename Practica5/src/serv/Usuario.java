@@ -24,8 +24,14 @@ public class Usuario implements Serializable {
 		return this.dirIp;
 	}
 	
-	public String[] getList() {
-		return (String[]) this.info.toArray();
+	public String getList() {
+		StringBuilder sb = new StringBuilder();
+		for(String str : info) {
+			sb.append(str);
+			sb.append("|");
+		}
+		sb.delete(sb.length()-1, sb.length());
+		return sb.toString();
 	}
 	
 	public void addtoList(String newFile) {

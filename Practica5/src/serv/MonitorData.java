@@ -40,17 +40,14 @@ public class MonitorData {
 
 
 	synchronized String getUsersList() {
-		//Enumeration<String> enu = this.data.keys();
 		
 		StringBuilder str = new StringBuilder();
-		str.append("Lista de usuarios: ");
+		str.append("Lista de usuarios:\n ");
 		for(String key : data.keySet()) {
-//		while (enu.hasMoreElements()){
-//			str.append(enu.nextElement());
 			str.append(key);
-			str.append(": ");
+			str.append("[");
 			str.append(data.get(key).getList());
-			str.append("||");
+			str.append("]\n");
 		}
 		str.delete(str.length()-2, str.length());
 		str.append('.');
