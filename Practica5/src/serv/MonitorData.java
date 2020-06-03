@@ -53,7 +53,6 @@ public class MonitorData {
 			str.append(data.get(key).getList());
 			str.append("]\n");
 		}
-		//str.delete(str.length()-2, str.length());
 		str.append('.');
 		return str.toString();
 	}

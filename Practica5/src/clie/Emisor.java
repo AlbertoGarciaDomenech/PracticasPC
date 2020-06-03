@@ -33,8 +33,7 @@ public class Emisor extends Thread{
 		try {
 			socket = serverSocket.accept();
 			inFile.transferTo(socket.getOutputStream());
-			//ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-			//out.writeObject((Object) this.inFile);
+
 			socket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
