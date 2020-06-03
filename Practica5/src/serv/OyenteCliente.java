@@ -55,8 +55,8 @@ public class OyenteCliente extends Thread{
 					//obtener fout2 de owners
 					ObjectOutputStream fout2 = sockets.getFout(owner);
 					//obtenemos usuario propietario
-					Usuario _user = data.getUser(owner);
-					fout2.writeObject(new MensajeEmitirFich(message.getOrigin(), message.getDestiny(),_user, fileName));
+					Usuario _user = data.getUser(message.getOrigin());
+					fout2.writeObject(new MensajeEmitirFich(message.getDestiny(), owner,_user, fileName));
 					break;				
 				case PREPARADO_CLIENTE_SERVIDOR:
 					MensajePreparadoClienteServidor mPrep = (MensajePreparadoClienteServidor) message;
@@ -64,7 +64,7 @@ public class OyenteCliente extends Thread{
 					ObjectOutputStream fout1 = sockets.getFout(mPrep.getC1());
 					InetAddress ipEmisor = mPrep.getIP();
 					int port = mPrep.getPort();
-					fout1.writeObject(new MensajePreparadoServidorCliente(message.getDestiny(), message.getOrigin(), ipEmisor, port));
+					fout1.writeObject(new MensajePreparadoServidorCliente(message.getDestiny(), mPrep.getC1(), ipEmisor, port));
 					break;
 			
 				default:

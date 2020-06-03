@@ -78,7 +78,7 @@ public class Client {
 					case 2:
 						//PEDIR FICHERO
 						System.out.println("¿Que fichero quieres? :");
-						String fileName = scan.next();//Line();
+						String fileName = scan.next();
 						outputChannel.writeObject((new MensajePedirFIch(userID, hostname, fileName)));
 						break;
 				}
