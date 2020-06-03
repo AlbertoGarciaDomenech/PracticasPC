@@ -20,7 +20,9 @@ public class OyenteServidor extends Thread {
 	
 	public void run() {
 		
-		while(true) {
+		boolean run = true;
+		
+		while(run) {
 			
 			Message m = null;
 			
@@ -64,7 +66,7 @@ public class OyenteServidor extends Thread {
 				
 				case CONFIRMACION_CERRAR: 
 					System.err.println("Adios!");
-//					socket.close();
+					run = false;
 					break;
 					
 				case CONFIRMACION_ADD:
@@ -77,12 +79,17 @@ public class OyenteServidor extends Thread {
 				
 				
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
 		}
 		
+		try {
+			socket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 	
 }

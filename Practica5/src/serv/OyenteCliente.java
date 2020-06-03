@@ -27,7 +27,8 @@ public class OyenteCliente extends Thread{
 	
 	public void run() {
 		
-		while(true) {
+		boolean run = true;
+		while(run) {
 			Message message = null;
 			try {
 				message = (Message) fin.readObject();
@@ -45,8 +46,9 @@ public class OyenteCliente extends Thread{
 					break;
 				case CERRAR_CONEXION:
 					sockets.delete(message.getOrigin());
+					data.delete(message.getOrigin());
 					fout.writeObject(new MensajeCerrarConfirm(message.getDestiny(), message.getOrigin()));
-//					socket.close();
+					run = false;
 					break;
 				case PEDIR_FICHERO:
 					MensajePedirFIch mPedir = (MensajePedirFIch) message;
@@ -78,6 +80,12 @@ public class OyenteCliente extends Thread{
 				e.printStackTrace();
 			}
 					
+		}
+
+		try {
+			socket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		
 	}

@@ -53,7 +53,7 @@ public class Client {
 		System.out.println("¿Cual es tu nombre de usuario? :");
 		userID = scan.nextLine();
 		
-		infoCompartida = askInfo(scan);
+		askInfo(scan, infoCompartida);
 		_user = new Usuario(userID, dirIP, infoCompartida);
 		
 		Client client = new Client(localhost, dirIP, hostname, userID, _user);
@@ -94,7 +94,10 @@ public class Client {
 				}
 				opcion = client.menu(scan);
 			}
-				outputChannel.writeObject(new MensajeCerrarConex(userID, hostname));			
+			
+			outputChannel.writeObject(new MensajeCerrarConex(userID, hostname));
+			//opcion 0 salir del server
+			Thread.sleep(500);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -123,17 +126,21 @@ public class Client {
 	}
 
 	
-	public static ArrayList<String> askInfo(Scanner scan) {
-		ArrayList<String> strList = new ArrayList<>();
+	public static void askInfo(Scanner scan, ArrayList<String> strList) {
 		String more;
 		System.out.println("¿Posees algun archivo?(y/n) ");
 		more = scan.next();
 		while((more.equals("y"))) {
 			System.out.println("\n¿Que archivos quieres compartir?(introduce uno a uno): ");
-			strList.add(scan.next());
+			String file = scan.next();
+			File tmpDir = new File(file);
+			boolean exists = tmpDir.exists();
+			if(exists)
+				strList.add(file);
+			else
+				System.out.println("No tienes este fichero!");
 			System.out.println("\n¿Quieres añadir algun archivo mas a tu lista de compartir?(y/n) ");
 			more = scan.next();
 		}		
-		return strList;
 	}
 }
