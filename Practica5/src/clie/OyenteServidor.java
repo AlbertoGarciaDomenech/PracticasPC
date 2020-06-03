@@ -11,13 +11,11 @@ public class OyenteServidor extends Thread {
 	private Socket socket;
 	private ObjectInputStream inputChannel;
 	private ObjectOutputStream outputChannel;
-	private int port;
 	
-	public OyenteServidor(Socket _s,ObjectInputStream _in, ObjectOutputStream _out,int _port) {
+	public OyenteServidor(Socket _s,ObjectInputStream _in, ObjectOutputStream _out) {
 		this.socket = _s;
 		this.inputChannel = _in;
 		this.outputChannel = _out;
-		this.port = _port;
 	}
 	
 	public void run() {
@@ -52,14 +50,15 @@ public class OyenteServidor extends Thread {
 					int portEmisor = emisor.getPort();
 					emisor.start();
 					InetAddress ipEmisor = InetAddress.getLocalHost();
-					outputChannel.writeObject(new MensajePreparadoClienteServidor(m.getDestiny(), m.getOrigin(),clienteC1, ipEmisor,portEmisor));
+					outputChannel.writeObject(new MensajePreparadoClienteServidor(m.getDestiny(), m.getOrigin(),clienteC1, ipEmisor,portEmisor, infoEmitir));
 					break;
 				
 				case PREPARADO_SERVIDOR_CLIENTE:
 					MensajePreparadoServidorCliente mPrep = (MensajePreparadoServidorCliente) m;
 					int _port = mPrep.getPort();
 					InetAddress ip = mPrep.gertIP();
-					(new Receptor(ip,port)).start();
+					String fileDescar = mPrep.getFilename();
+					(new Receptor(ip,_port,fileDescar)).start();
 					
 					break;
 				

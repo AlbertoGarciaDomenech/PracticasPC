@@ -1,31 +1,32 @@
 package clie;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
-import mensajes.MensajeCerrarConex;
-import mensajes.MensajeConexion;
-import mensajes.MensajeListaUsers;
-import mensajes.MensajePedirFIch;
 
 public class Receptor extends Thread{
 
 	private InetAddress dirIP;
 	private int port;
+	private String fileName;
+	private FileOutputStream fileDesc;
 	
-	
-	public Receptor(InetAddress _dirIP, int _port) {
+	public Receptor(InetAddress _dirIP, int _port, String _filename) throws FileNotFoundException {
 		this.dirIP = _dirIP;
 		this.port = _port;
-		
+		this.fileName = _filename;
+		this.fileDesc = new FileOutputStream(this.fileName);
 	}
 	public void run() {
 		try(Socket socket = new Socket(this.dirIP,this.port)) { 	// crea el socket con el emisor
-			ObjectInputStream inputChannel = new ObjectInputStream(socket.getInputStream());
-			ObjectOutputStream outputChannel = new ObjectOutputStream(socket.getOutputStream());
-			
+			System.err.println("Descargando " + fileName);
+			socket.getInputStream().transferTo(fileDesc);
+			System.err.println("Descarga finalizada de " + this.fileName);
+			socket.close();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

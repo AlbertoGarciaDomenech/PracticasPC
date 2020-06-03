@@ -36,7 +36,7 @@ public class OyenteCliente extends Thread{
 					MensajeConexion mConex = (MensajeConexion) message;
 					String _userID = mConex.getNewUser().getUserID();
 					sockets.add(_userID, this.fin, this.fout);
-					data.add(_userID, mConex.getNewUser());
+					data.addUser(_userID, mConex.getNewUser());
 					fout.writeObject(new MensajeConfirmacionConex(message.getDestiny(), message.getOrigin()));
 					break;
 				case LISTA_USUARIOS:
@@ -63,11 +63,15 @@ public class OyenteCliente extends Thread{
 					//buscar fout1 (cliente al que mandar informacion)
 					ObjectOutputStream fout1 = sockets.getFout(mPrep.getC1());
 					InetAddress ipEmisor = mPrep.getIP();
+					String infoDescargar = mPrep.getF();
 					int port = mPrep.getPort();
-					fout1.writeObject(new MensajePreparadoServidorCliente(message.getDestiny(), mPrep.getC1(), ipEmisor, port));
+					fout1.writeObject(new MensajePreparadoServidorCliente(message.getDestiny(), mPrep.getC1(), ipEmisor, port,infoDescargar));
 					break;
 			
-				default:
+				case ADD_FILE:
+					MensajeAdd mAdd = (MensajeAdd) message;
+					this.data.addFileToUser(message.getOrigin(),mAdd.getfile());
+					fout.writeObject(new MensajeConfirmacionAdd(message.getDestiny(), message.getOrigin()));
 					break;
 				}
 			}catch (Exception e) {

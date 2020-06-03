@@ -34,7 +34,7 @@ public class Usuario implements Serializable {
 	}
 	
 	public void addtoList(String newFile) {
-		
+		this.info.add(newFile);
 	}
 	
 	public boolean hasFile(String filename) {

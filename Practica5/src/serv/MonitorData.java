@@ -12,14 +12,14 @@ public class MonitorData {
 	}
 	
 	
-	synchronized public void add(String _userID, Usuario user) {
+	synchronized void addUser(String _userID, Usuario user) {
 		
 		if(!data.containsKey(_userID)) { //checks if user already in database
 			data.put(_userID, user);
 		}
 	}
 	
-	synchronized public void delete(String _userID) {
+	synchronized  void delete(String _userID) {
 		if(data.containsKey(_userID))
 			data.remove(_userID);
 	}
@@ -38,6 +38,10 @@ public class MonitorData {
 		return data.get(id);
 	}
 
+	
+	synchronized void addFileToUser(String _uID, String _filename) {
+		data.get(_uID).addtoList(_filename);
+	}
 
 	synchronized String getUsersList() {
 		

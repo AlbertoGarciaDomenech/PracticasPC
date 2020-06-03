@@ -1,5 +1,7 @@
 package clie;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -12,11 +14,14 @@ public class Emisor extends Thread{
 
 	
 	private ServerSocket serverSocket;
-	private Object infoEmitir;
+	private String infoEmitir;
+	private FileInputStream inFile;
 	
-	public Emisor(String _infoEmitir) throws IOException {
+	
+	public Emisor(String _infoEmitir) throws IOException,FileNotFoundException {
 		this.serverSocket = new ServerSocket(0);		//ponemos el puerto 0 para que se nos asigne automaticamente uno libre
 		this.infoEmitir = _infoEmitir;
+		this.inFile = new FileInputStream(this.infoEmitir);
 	}
 	
 	public int getPort() {
@@ -27,8 +32,10 @@ public class Emisor extends Thread{
 		Socket socket;
 		try {
 			socket = serverSocket.accept();
-			ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-			out.writeObject(this.infoEmitir);		
+			inFile.transferTo(socket.getOutputStream());
+			//ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+			//out.writeObject((Object) this.inFile);
+			socket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

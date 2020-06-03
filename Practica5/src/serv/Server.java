@@ -5,41 +5,54 @@ import java.util.*;
 
 public class Server {
 
-	//private MONITOR usuarios (tripleta idUsuario, canal comunicacion input, canal comunicacion output)
+	private InetAddress dirIP;
+	private int port;
+	private MonitorSockets sockets;
+	private MonitorData data;
 	
-	static HashMap<String,Object[]> usersInfo;
-	static HashMap<String, Object[]> usersData;
-	static MonitorSockets sockets;
-	static MonitorData data;
-	
-	static InetAddress dirIP;
-	static int port;
-	
+	public Server(InetAddress _ip, int _p) {
+		this.dirIP = _ip;
+		this.port = _p;
+		this.sockets = new MonitorSockets();
+		this.data = new MonitorData();
+		
+	}
+
 	public static void main(String[] args) throws UnknownHostException {
 		
 		if(args.length < 1) return;
-		dirIP = InetAddress.getLocalHost();
-		port = Integer.parseInt(args[0]);
-		//Server server = new Server(ip,port);
-	
-		sockets = new MonitorSockets();
+		InetAddress _dirIP = InetAddress.getLocalHost();
+		int _port = Integer.parseInt(args[0]);
 		
-		data = new MonitorData();
+		Server server = new Server(_dirIP,_port);
 		
-		
-		try(ServerSocket serverSocket = new ServerSocket(port)){
+		try(ServerSocket serverSocket = new ServerSocket(server.getPort())){
 			
 			while(true) {
 				Socket socket =  serverSocket.accept();
 				ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 				ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-				(new OyenteCliente(socket, in, out, sockets, data)).start();
+				(new OyenteCliente(socket, in, out, server.getSockets(), server.getData())).start();
 			}
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public int getPort() {
+		return this.port;
+	}
+	public InetAddress getIP() {
+		return this.dirIP;
+	}
+	
+	public MonitorSockets getSockets() {
+		return this.sockets;
+	}
+	public MonitorData getData() {
+		return this.data;
 	}
 
 }

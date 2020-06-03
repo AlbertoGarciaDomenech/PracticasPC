@@ -61,7 +61,7 @@ public class Client {
 		try(Socket socket = new Socket(client.getHost(),port)) { 	// crea el socket con el servidor
 			ObjectInputStream inputChannel = new ObjectInputStream(socket.getInputStream());
 			ObjectOutputStream outputChannel = new ObjectOutputStream(socket.getOutputStream());
-			(new OyenteServidor(socket,inputChannel, outputChannel,port)).start();	// crea un nuevo thread con el OyenteServidor
+			(new OyenteServidor(socket,inputChannel, outputChannel)).start();	// crea un nuevo thread con el OyenteServidor
 			
 			outputChannel.writeObject(new MensajeConexion(userID, hostname, _user)); 	// enviar mensaje conexion al servidor(se recibe confirmacion en OyenteServidor)
 
@@ -81,6 +81,11 @@ public class Client {
 						String fileName = scan.next();
 						outputChannel.writeObject((new MensajePedirFIch(userID, hostname, fileName)));
 						break;
+					case 3:
+						//Añadir fichero a lista compartir
+						System.out.println("Que fichero quieres compartir?: ");
+						String fileShare = scan.next();
+						outputChannel.writeObject(new MensajeAdd(userID, hostname, fileShare));
 				}
 				opcion = client.menu(scan);
 			}
@@ -101,11 +106,11 @@ public class Client {
 	
 	public int menu(Scanner scan) {
 		int opcion;
-		System.out.println("Que quieres hacer: \n 1: Conocer el nombre de todos los usuarios en el servidor \n 2: Descargar informacion \n 0: Salir");
+		System.out.println("Que quieres hacer: \n 1: Conocer el nombre de todos los usuarios en el servidor \n 2: Descargar informacion \n 3: Ampliar tu lista para compartir 0: Salir");
 		opcion = scan.nextInt();
-		while(opcion < 0 || opcion > 2) { //Asegurar que la opcion escrita por el cliente sea posible
+		while(opcion < 0 || opcion > 3) { //Asegurar que la opcion escrita por el cliente sea posible
 			System.out.println("Opcion no valida, por favor elija una de las tres opciones.\n");
-			System.out.println("Que quieres hacer: \n 1: Conocer el nombre de todos los usuarios en el servidor \n 2: Descargar informacion \n 0: Salir");
+			System.out.println("Que quieres hacer: \n 1: Conocer el nombre de todos los usuarios en el servidor \n 2: Descargar informacion \n 3: Ampliar tu lista para compartir \n 0: Salir");
 			opcion = scan.nextInt();
 				
 		}
@@ -119,9 +124,9 @@ public class Client {
 		System.out.println("¿Posees algun archivo?(y/n) ");
 		more = scan.next();
 		while((more.equals("y"))) {
-			System.out.println("\n¿Que archivos posees?(introduce uno a uno): ");
+			System.out.println("\n¿Que archivos quieres compartir?(introduce uno a uno): ");
 			strList.add(scan.next());
-			System.out.println("\n¿Posees algun archivo mas?(y/n) ");
+			System.out.println("\n¿Quieres añadir algun archivo mas a tu lista de compartir?(y/n) ");
 			more = scan.next();
 		}		
 		return strList;
