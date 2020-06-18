@@ -14,8 +14,8 @@ public class Productor extends Thread{
 	
 	public void run() {
 		int i = 0;
-			while(i < 10) {
-				this.p = new Producto(i);
+			while(i < 20) {
+				this.p = new Producto(this.id * 10 +i);
 				try {
 					this.monitor.put(this.p, this.id);
 				} catch (InterruptedException e) {

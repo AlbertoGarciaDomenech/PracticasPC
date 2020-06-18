@@ -3,11 +3,11 @@ package P3;
 public class MonitorProdCon {
 
 	
-	//check https://programaressencillo.wordpress.com/2014/11/25/java-monitores-ejemplo-productor-consumidor/
 	
 	private int MAX = 10;
 	private volatile Producto[] p;
 	private int front, rear, count;
+	private boolean vacio = true;
 	private boolean lleno = false;
 	
 	public MonitorProdCon() {
@@ -19,12 +19,13 @@ public class MonitorProdCon {
 	
 	synchronized Producto getP() throws InterruptedException {
 	
-		while(!lleno) wait();
+		while(vacio) wait();
 		Producto ret = p[front];
 		this.front++;
 		if(front == MAX)front = 0;
+		this.count--;
 		this.rear = (this.front + this.count) % MAX;
-		lleno = (front == rear);
+		vacio = (count == 0);
 		notify();
 		return ret;
 	}
@@ -36,7 +37,7 @@ public class MonitorProdCon {
 		this.count++;
 		this.rear = (this.front + this.count) % MAX;
 		lleno = (front == rear);
-		
+		vacio = false;
 		notify();
 	}
 }

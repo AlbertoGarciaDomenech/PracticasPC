@@ -4,7 +4,7 @@ public class MainProdCons {
 	
 	public static void main(String[] args) throws InterruptedException {
 
-		int N = 10;					 	// Num Productores
+		int N = 5;					 	// Num Productores
 		int M = 10;						// Num Consumidores
 		MonitorProdCon monitor = new MonitorProdCon();
 		Thread[] productores = new Thread[N];
