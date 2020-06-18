@@ -1,4 +1,5 @@
-public class Main {
+package P2;
+public class MainIncDec {
 
 	public static void main(String[] args) throws InterruptedException {
 		int N = 3000;
