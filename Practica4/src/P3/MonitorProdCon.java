@@ -33,7 +33,7 @@ public class MonitorProdCon {
 		
 		vacio = (count == 0);
 		lleno =  false;
-		notify();
+		notifyAll();
 		return ret;
 	}
 	
@@ -50,6 +50,6 @@ public class MonitorProdCon {
 		this.count++;
 		lleno = (count == MAX);
 		vacio = false;
-		notify();
+		notifyAll();
 	}
 }
