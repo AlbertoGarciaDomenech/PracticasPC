@@ -5,38 +5,50 @@ public class MonitorProdCon {
 	
 	
 	private int MAX = 10;
-	private volatile Producto[] p;
-	private int front, rear, count;
-	private boolean vacio = true;
-	private boolean lleno = false;
+	private volatile Producto[] p = null;
+	private volatile int front, rear, count;
+	private volatile boolean vacio = true, lleno = false;
+	
+	
 	
 	public MonitorProdCon() {
-		this.front = 0;
-		this.count = 0;
-		this.rear = (this.front + this.count) % MAX;
+		this.front = 0;this.count = 0;this.rear = 0;
 		this.p = new Producto[MAX];
 	}
 	
-	synchronized Producto getP() throws InterruptedException {
+	public synchronized Producto getP(int idCon) {
 	
-		while(vacio) wait();
-		Producto ret = p[front];
-		this.front++;
-		if(front == MAX)front = 0;
+		while(vacio)
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		Producto ret = this.p[front];
+		this.p[front] = null; this.p = this.p;
+		System.out.println("Consumidor " + idCon + "consume producto " + ret.id);
+		
+		this.front = (this.front+1) % MAX;
 		this.count--;
-		this.rear = (this.front + this.count) % MAX;
+		
 		vacio = (count == 0);
+		lleno =  false;
 		notify();
 		return ret;
 	}
 	
-	synchronized void put(Producto pro, int idProd) throws InterruptedException {
-		while(lleno) wait();
-		this.p[rear] = pro;
-		System.out.println("Productor " + idProd + ": Producto " + this.p[rear].id + " creado");
+	public synchronized void put(Producto pro, int idProd) {
+		while(lleno)
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		this.p[rear] = pro; this.p = this.p;
+		System.out.println("Productor " + idProd + ": Producto " + pro.id  + " creado");
+		this.rear = (rear+1) % MAX;
 		this.count++;
-		this.rear = (this.front + this.count) % MAX;
-		lleno = (front == rear);
+		lleno = (count == MAX);
 		vacio = false;
 		notify();
 	}

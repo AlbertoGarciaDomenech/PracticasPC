@@ -14,16 +14,9 @@ public class Consumidor extends Thread{
 	public void run() {
 	int i = 0;
 		
-		while(i < 10) {
-				
-			Producto prod;
-			try {
-				prod = monitor.getP();
-				System.out.println("Consumidor " + this.id + "coge producto " + prod.id);
-				i++;
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+		while(true) {
+			Producto prod = monitor.getP(this.id);
+			//i++;
 		}
 	}
 	
