@@ -17,7 +17,7 @@ public class ProductorMultiBuffer2 extends Thread{
 	
 	public void run() {
 		int i = 0;
-			while(true) {
+			while(true/*i < Num*/) {
 				p = new ProductoMultiBuffer2[this.length];
 				for(int j = 0; j < length; j++) {
 					

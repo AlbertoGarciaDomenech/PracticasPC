@@ -1,4 +1,4 @@
-package P2;
+package IncrDecr;
 public class MainIncDec {
 
 	public static void main(String[] args) throws InterruptedException {

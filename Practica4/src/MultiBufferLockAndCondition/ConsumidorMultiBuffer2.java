@@ -16,7 +16,7 @@ public class ConsumidorMultiBuffer2 extends Thread{
 	public void run() {
 	int i = 0;
 		
-		while(true) {
+		while(true/*i < Num*/) {
 			ProductoMultiBuffer2 prod[] = monitor.getP(this.id, this.length);
 			//i++;
 		}

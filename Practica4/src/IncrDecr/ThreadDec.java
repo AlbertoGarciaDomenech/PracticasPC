@@ -1,4 +1,4 @@
-package P2;
+package IncrDecr;
 
 public class ThreadDec extends Thread {
 
